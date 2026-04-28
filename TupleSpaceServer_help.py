@@ -174,6 +174,24 @@ def handle_request(message):
             increment_stat("get_count")
 
 
+            """
+            Code about Task4:
+            """
+
+            #read and delete the key's value in tuple_space
+            #It automatically returns None if the key doesn't exist
+            value = tuple_space.pop(key,None)
+
+            #If there is a value in the tuple_space,Format message and return it as response.
+            if value is not None:
+                return f"OK ({key},{value}) removed"
+            
+            #If not,count the error.Format message and return it as response
+            else:
+                increment_stat("error_count") 
+                return f"ERR {key} does not exist"
+            
+
         elif op == "P":
             if len(parts) < 3:
                 increment_stat("error_count")
