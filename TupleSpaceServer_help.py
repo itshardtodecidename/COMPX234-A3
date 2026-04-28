@@ -115,7 +115,7 @@ def handle_client(client_socket):
             """
             #get total size and send format message
             total_size=len(response)+4
-            
+
             response_message=f"{total_size:03d} {response}"
 
             client_socket.sendall(response_message).encode('utf-8')
@@ -149,6 +149,21 @@ def handle_request(message):
         if op == "R":
             # TASK 3: READ — look up key in tuple_space.
             # Return "OK (<key>, <value>) read" or "ERR <key> does not exist".
+
+            """
+            Code about Task3:
+            """
+
+            #if it has the value,read it.Format message and return it as response
+            if key in tuple_space:
+                value=tuple_space[key]
+                return f"OK ({key},{value}) read"
+            
+            #or it doesn't have the value,count the error.Format message and return it as response
+            else:
+                increment_stat("error_count")
+                return f"ERR {key} does not exist"
+            
             increment_stat("read_count")
 
 
