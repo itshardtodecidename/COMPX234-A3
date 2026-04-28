@@ -22,8 +22,15 @@ def main():
     # Hint: socket.socket(socket.AF_INET, socket.SOCK_STREAM) creates the socket.
     # Then call sock.connect((hostname, port)) to connect.
 
+    """
+    Code about Task1:
+    """
 
+    #IPv4 TCP
+    sock=socket.socket(socket.AF_INET,socket.SOCK_STREAM)
     try:
+        #Try to connect the server
+        sock.connect((hostname,port))
         for line in lines:
             line = line.strip()
             if not line:
@@ -46,7 +53,6 @@ def main():
             # - Send:    sock.sendall(message.encode())
             # - Receive: first read 3 bytes to get the response size (like the server does).
             #            Then read the remaining (size - 3) bytes to get the response body.
-
 
             response = response_buffer.decode().strip()
             print(f"{line}: {response}")
