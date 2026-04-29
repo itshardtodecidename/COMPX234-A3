@@ -48,6 +48,71 @@ def main():
             # Hint: for READ/GET, size = 6 + len(key). For PUT, size = 7 + len(key) + len(value).
             # Reject lines with invalid format or key+" "+value > 970 chars.
 
+            """
+            Code about Task2:
+            """
+            
+            if cmd == "READ":
+                
+                #should be instruction and key
+                if len(parts) != 2:
+                    print(f"{line}: ERR Invalid format")
+                    continue
+
+                #key is the second element
+                key = parts[1]
+            
+                #Wrong Format Detection
+                if len(key) > 999:
+                    print(f"{line}: ERR Key is too long")
+                    continue
+
+                #NNN(3)+space(1)+R(1)+space(1)+key((len)key)
+                message_size = 6 + len(key)
+                message = f"{message_size:03d} R {key}"
+
+            elif cmd == "GET":
+                #should be instruction and key
+                if len(parts) != 2:
+                    print(f"{line}: ERR Invalid format")
+                    continue
+
+                #key is the second element
+                key = parts[1]
+
+                #Wrong Format Detection
+                if len(key) > 999:
+                    print(f"{line}: ERR Key is too long")
+                    continue
+
+                #NNN(3)+space(1)+G(1)+space(1)+key((len)key)
+                message_size = 6 + len(key)
+                message = f"{message_size:03d} G {key}"
+
+            elif cmd == "PUT":
+                #should be instruction,key and value
+                if len(parts) != 3:
+                    print(f"{line}: ERR Invalid format")
+                    continue
+
+                #key is the second element,value is the third
+                key = parts[1]
+                value = parts[2]
+
+                #Wrong Format Detection
+                if len(value) > 999 or len(key + " " + value) > 970:
+                    print(f"{line}: ERR Key or Value is too long")
+                    continue
+
+                #NNN(3)+space(1)+R(1)+space(1)+key((len)key)+space(1)+value(len(value))
+                
+                message_size = 7 + len(key) + len(value)
+                message = f"{message_size:03d} P {key} {value}"
+
+            else:
+                #Unsupported operation
+                print(f"{line}: ERR Unknown command")
+                continue
 
             # TASK 3: Send the message to the server, then receive the response.
             # - Send:    sock.sendall(message.encode())
