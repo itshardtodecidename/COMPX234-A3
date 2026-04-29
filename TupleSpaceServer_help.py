@@ -47,7 +47,7 @@ def print_stats():
         time.sleep(10)
         with lock:
             tuple_count = len(tuple_space)
-            avg_key_size = avg_v+alue_size = avg_tuple_size = 0
+            avg_key_size = avg_value_size = avg_tuple_size = 0
             if tuple_count > 0:
                 total_key_size = sum(len(k) for k in tuple_space.keys())
                 total_value_size = sum(len(v) for v in tuple_space.values())
@@ -118,7 +118,7 @@ def handle_client(client_socket):
 
             response_message=f"{total_size:03d} {response}"
 
-            client_socket.sendall(response_message).encode('utf-8')
+            client_socket.sendall(response_message.encode('utf-8'))
 
             
     except (socket.error, ValueError):
@@ -154,6 +154,8 @@ def handle_request(message):
             Code about Task3:
             """
 
+            increment_stat("read_count")
+
             #if it has the value,read it.Format message and return it as response
             if key in tuple_space:
                 value=tuple_space[key]
@@ -164,7 +166,7 @@ def handle_request(message):
                 increment_stat("error_count")
                 return f"ERR {key} does not exist"
             
-            increment_stat("read_count")
+            
 
 
         elif op == "G":

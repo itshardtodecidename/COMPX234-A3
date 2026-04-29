@@ -123,7 +123,7 @@ def main():
             Code about Task3
             """
 
-            sock.sendall(message.encode)
+            sock.sendall(message.encode())
 
             #size_bytes=receive_n(sock,3)
             data = b""
