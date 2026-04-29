@@ -119,6 +119,43 @@ def main():
             # - Receive: first read 3 bytes to get the response size (like the server does).
             #            Then read the remaining (size - 3) bytes to get the response body.
 
+            """
+            Code about Task3
+            """
+
+            sock.sendall(message.encode)
+
+            #size_bytes=receive_n(sock,3)
+            data = b""
+            while len(data) < 3:
+                chunk = sock.recv(3 - len(data))
+                if not chunk:  # Connection closed or error
+                    break
+                data += chunk
+            size_bytes=data
+            #size_bytes=receive_n(sock,3)
+
+
+            if len(size_bytes) < 3:
+                print(f"{line}: ERR Server closed connection")
+                break
+
+            response_size=int(size_bytes.decode('utf-8'))
+            
+            #response_buffer=receive_n(sock,response_size-3)
+            data = b""
+            while len(data) < response_size - 3:
+                chunk2 = sock.recv(response_size - 3 - len(data))
+                if not chunk2:  # Connection closed or error
+                    break
+                data += chunk2
+            response_buffer=data
+            #response_buffer=receive_n(sock,response_size-3)
+
+            if len(response_buffer)<response_size-3:
+                print(f"{line}: ERR Incomplete response from server")
+                break
+            
             response = response_buffer.decode().strip()
             print(f"{line}: {response}")
 
