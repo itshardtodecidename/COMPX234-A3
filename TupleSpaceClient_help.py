@@ -165,6 +165,12 @@ def main():
     finally:
         # TASK 4: Close the socket when done (already called for you — explain why
         # finally: is the right place to do this even if an error occurs above).
+
+        """
+        Explanation about Task4:
+        close the socket is in the finally.So whether the try can be execuated correctly,it will
+        close the socket.If not,the socket may can't be  shut down in sometime.
+        """
         sock.close()
 
 if __name__ == "__main__":
